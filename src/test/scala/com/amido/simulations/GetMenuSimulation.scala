@@ -10,22 +10,27 @@ import scala.concurrent.duration._
 //Docs: https://gatling.io/docs/current/general/simulation_structure/
 //Docs: https://gatling.io/docs/current/general/simulation_setup
 class GetMenuSimulation extends Simulation {
-  private val getMenuRampExec = GetMenuScenario.getMenuScenario
+  private val getMenuRampExec = GetMenuScenario.getMenuCollection
     .inject(
       //rampConcurrentUsers(users) to (users + 10) during (rampup seconds),
       //constantConcurrentUsers(users) during (rampup seconds),
-      rampUsers(users) during (rampup seconds)
+      rampUsers(rampUpUsers) during (rampUpDuration seconds),
       //nothingFor(4 seconds),
       //atOnceUsers(10),
       //rampUsers(10) during (5 seconds),
-      //constantUsersPerSec(20) during (15 seconds),
+      constantUsersPerSec(constUsersPerSecDuration) during (constUsersPerSecDuration seconds),
       //constantUsersPerSec(20) during (15 seconds) randomized,
       //rampUsersPerSec(10) to 20 during (10 minutes),
       //rampUsersPerSec(10) to 20 during (10 minutes) randomized,
       //heavisideUsers(1000) during (20 seconds)
     )
 
-  setUp(getMenuRampExec)
+  private val getMenuResourceExec = GetMenuScenario.getMenuResource
+    .inject(
+      rampUsers(rampUpUsers) during(rampUpDuration seconds)
+    )
+
+  setUp(getMenuRampExec, getMenuResourceExec)
     // 20000 was set for local runs, should decrease to 2000 for runs in cloud
     .assertions(global.responseTime.max.lt(20000))
 }

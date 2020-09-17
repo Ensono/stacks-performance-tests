@@ -1,0 +1,18 @@
+{
+  "simulation": "com.amido.simulations.DeleteMenuSimulation",
+  "simulationId": "deletemenusimulation",
+  "start": 1600344834622,
+  "description": "",
+  "scenarios": ["DELETE menu resource not found scenario"],
+  "assertions": [
+{
+  "path": "Global",
+  "target": "max of response time",
+  "condition": "is less than",
+  "expectedValues": [5000.0],
+  "result": false,
+  "message": "Global: max of response time is less than 5000.0",
+  "actualValue": [10221.0]
+}
+  ]
+}

@@ -28,8 +28,8 @@ Once the project has been cloned locally, tests can be run using the following c
 By default, this will run a load test against the GET menu api with 1 user with a ramp up duration of 1 second.
 There are optional parameters that can be added to change the load test:
 
-- `-Dusers=X` - This allows you to set the number of users that will be simulated in the tests
-- `-Drampup=X` - This sets the amount of seconds the test will ramp the test load from 0 users to X users in the test
+- `-DrampUsers=X` - This allows you to set the number of users that will be simulated in the tests
+- `-DrampDuration=X` - This sets the amount of seconds the test will ramp the test load from 0 users to X users in the test
 
 Example:
 

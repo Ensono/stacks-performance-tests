@@ -7,9 +7,18 @@ import io.gatling.core.Predef._
 import scala.concurrent.duration._
 
 class CreateMenuSimulation extends Simulation {
-  private val createMenuRampExec = CreateMenuScenario.createMenuScenario
-    .inject(rampUsers(users) during(rampup seconds))
+  private val createMenuRampExec = CreateMenuScenario.createMenu
+    .inject(
+      atOnceUsers(onceUsers),
+      rampUsers(rampUpUsers) during(rampUpDuration seconds)
+    )
 
-  setUp(createMenuRampExec)
-    .assertions(global.responseTime.max.lt(5000))
+  private val createMenuErrorRampExec = CreateMenuScenario.createMenuError
+    .inject(
+      atOnceUsers(onceUsers),
+      rampUsers(rampUpUsers) during(rampUpDuration seconds)
+    )
+
+  setUp(createMenuErrorRampExec)
+    .assertions(global.responseTime.max.lt(45000))
 }

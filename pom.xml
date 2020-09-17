@@ -38,6 +38,11 @@
       <artifactId>config</artifactId>
       <version>${typesafe-config.version}</version>
     </dependency>
+    <dependency>
+      <groupId>io.jvm.uuid</groupId>
+      <artifactId>scala-uuid_2.12</artifactId>
+      <version>0.2.4</version>
+    </dependency>
   </dependencies>
 
   <build>
@@ -56,10 +61,10 @@
           <configuration>
             <runMultipleSimulations>true</runMultipleSimulations>
             <includes>
-              <param>com.amido.simulations.GetMenuSimulation</param>
+              <param>com.amido.simulations.*</param>
             </includes>
             <excludes>
-              <param>com.amido.simulations.CreateMenuSimulation</param>
+<!--              <param>com.amido.simulations.CreateMenuSimulation</param>-->
             </excludes>
           </configuration>
       </plugin>

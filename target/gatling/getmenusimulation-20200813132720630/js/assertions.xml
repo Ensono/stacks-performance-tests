@@ -1,5 +1,0 @@
-<testsuite name="com.amido.simulations.GetMenuSimulation" tests="1" errors="0" failures="1" time="0">
-<testcase name="Global: max of response time is less than 20000.0" status="false" time="0">
-  <failure type="Global">Actual value: 39035.0</failure>
-</testcase>
-</testsuite>
