@@ -1,12 +1,15 @@
 package com.amido.requests.menu
 
 import com.amido.config.Configuration.baseUrl
-import com.amido.utils.CreateMenuUtil
+import com.amido.config.EndPoints.MenuPath
+import com.amido.utils.MenuUtil
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import io.gatling.http.request.builder._
 
 object CreateMenuRequest {
+
+  val createMenuErrorResource = getClass.getResource("/bodies/CreateMenuError.json")
 
   val requestBody = "{   \"name\": \"placeholderName\"," +
                     "\n  \"description\": \"placeholderDesc\"," +
@@ -16,19 +19,21 @@ object CreateMenuRequest {
   var randomName = Iterator.continually(
                       Map(
                         "randName" -> requestBody.replaceAll("placeholder.*",
-                          "PERF TEST " + CreateMenuUtil.randomString(20) +"\","))
-  )
+                          "PERF TEST " + MenuUtil.randomString(20) +"\",")))
+
+  var httpHeaders = Map("Content-Type" -> "application/json")
+
 
   val createMenu: HttpRequestBuilder = http("Create Menu")
-    .post(baseUrl + "/v1/menu")
+    .post(baseUrl + MenuPath)
     .body(StringBody("""${randName}"""))
-    .header("content-type", "application/json")
+    .headers(httpHeaders)
     .check(status is 201)
     .check(jsonPath("$.id").saveAs("menuId"))
 
   val createMenuError: HttpRequestBuilder = http("Create Menu Error")
-    .post(baseUrl + "/v1/menu")
-    .body(RawFileBody("./src/test/resources/bodies/CreateMenuError.json")).asJson
-    .header("content-type", "application/json")
+    .post(baseUrl + MenuPath)
+    .body(RawFileBody(createMenuErrorResource.getPath())).asJson
+    .headers(httpHeaders)
     .check(status is 400)
 }
