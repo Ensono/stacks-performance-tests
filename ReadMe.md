@@ -15,7 +15,7 @@ Blog post by Amir Gharai which was used to set up the framework -
 
 ## Dependencies
 
-- Java SDK 8
+- Java version 11
 - Maven
 - IDE for Scala development. I.e. IntelliJ IDEA
 
@@ -23,7 +23,7 @@ Blog post by Amir Gharai which was used to set up the framework -
 
 Once the project has been cloned locally, tests can be run using the following command:
 
-`mvn clean gatling:test -Denv=local`
+`mvn clean gatling:test -Denv=dev`
 
 By default, this will run a load test against all simulations with 1 user with a ramp up duration of 1 second.
 
@@ -31,7 +31,7 @@ There are optional parameters that can be added to change the load test:
 
 - `-DrampUsers=X` - This allows you to set the number of users that will be simulated in the tests.
 - `-DrampDuration=X` - This sets the amount of seconds the test will ramp the test load from 0 users to X users in the test.
-- `-DatOnceUsers=X - ` - Injects a given number of users at once.
+- `-DatOnceUsers=X` - Injects a given number of users at once.
 - `-DconstantUsersPerSec=X -DconstUsersDuration=X` - Injects users at a constant rate, defined in users per second, during a given duration. Users will be injected at regular intervals.
 ##### Environment settings
 
@@ -51,11 +51,11 @@ e.g.
 
 - Run all simulations
 
-`mvn clean gatling:test -Denv=local -DrampUsers=10 -DrampDuration=5 -DatOnceUsers=4`
+`mvn clean gatling:test -Denv=dev -DrampUsers=10 -DrampDuration=5 -DatOnceUsers=4`
 
 - Run a single simulation
 
-`mvn clean gatling:test -Denv=local -Dgatling.simulationClass=com.amido.simulations.menu.GetMenuSimulation -DrampUsers=2 -DrampDuration=2`
+`mvn clean gatling:test -Denv=dev -Dgatling.simulationClass=com.amido.simulations.menu.GetMenuSimulation -DrampUsers=2 -DrampDuration=2`
 
 ##### Deleting menu resources
 
@@ -64,6 +64,8 @@ In the root folder of the project run the following commands to delete menu reso
 1. `cd src/test/scala/com/amido/utils`
 2. `sh tearDownDeleteMenuItems.sh http://localhost:9000`
 
+**NB**: In the tests, created Menu resources have a `description` and `name` prefixed with the string "PERF TEST".
+This is so that they can be easily identified in queries.
 
 
 ## Folder Structure

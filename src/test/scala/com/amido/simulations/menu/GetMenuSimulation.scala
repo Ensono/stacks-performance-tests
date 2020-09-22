@@ -1,7 +1,7 @@
 package com.amido.simulations.menu
 
 import com.amido.config.Configuration._
-import com.amido.scenarios.menu.GetMenuScenario
+import com.amido.scenarios.MenuScenarios
 import io.gatling.core.Predef._
 
 import scala.concurrent.duration._
@@ -10,7 +10,7 @@ import scala.concurrent.duration._
 //Docs: https://gatling.io/docs/current/general/simulation_structure/
 //Docs: https://gatling.io/docs/current/general/simulation_setup
 class GetMenuSimulation extends Simulation {
-  private val getMenuRampExec = GetMenuScenario.getMenuCollection
+  private val getMenuRampExec = MenuScenarios.getMenuCollectionScenario
     .inject(
       //rampConcurrentUsers(users) to (users + 10) during (rampup seconds),
       //constantConcurrentUsers(users) during (rampup seconds),
@@ -25,19 +25,14 @@ class GetMenuSimulation extends Simulation {
       //heavisideUsers(1000) during (20 seconds)
     )
 
-  private val getMenuResourceExec = GetMenuScenario.getMenuResource
+  private val getMenuResourceExec = MenuScenarios.getMenuResourceScenario
     .inject(
       atOnceUsers(onceUsers),
       rampUsers(rampUpUsers) during(rampUpUsersDuration seconds)
     )
 
-  private val getMenuResourceNotFoundExec = GetMenuScenario.getMenuResourceNotFound
-    .inject(
-      atOnceUsers(onceUsers),
-      rampUsers(rampUpUsers) during(rampUpUsersDuration seconds)
-    )
 
-  setUp(getMenuResourceNotFoundExec)
+  setUp(getMenuRampExec)
     // 20000 was set for local runs, should decrease to 2000 for runs in cloud
     .assertions(global.responseTime.max.lt(20000))
 }

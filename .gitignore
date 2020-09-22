@@ -1,4 +1,6 @@
-target/
+target/*
 .idea/
 *.iml
 *.logs
+.DS_Store
+scriptFile.scala
