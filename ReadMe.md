@@ -15,7 +15,7 @@ Blog post by Amir Gharai which was used to set up the framework -
 
 ## Dependencies
 
-- Java SDK 8
+- Java version 11
 - Maven
 - IDE for Scala development. I.e. IntelliJ IDEA
 
@@ -23,17 +23,52 @@ Blog post by Amir Gharai which was used to set up the framework -
 
 Once the project has been cloned locally, tests can be run using the following command:
 
-`mvn clean gatling:test`
+`mvn clean gatling:test -Denv=dev`
 
-By default, this will run a load test against the GET menu api with 1 user with a ramp up duration of 1 second.
+By default, this will run a load test against all simulations with 1 user with a ramp up duration of 1 second.
+
 There are optional parameters that can be added to change the load test:
 
-- `-Dusers=X` - This allows you to set the number of users that will be simulated in the tests
-- `-Drampup=X` - This sets the amount of seconds the test will ramp the test load from 0 users to X users in the test
+- `-DrampUsers=X` - This allows you to set the number of users that will be simulated in the tests.
+- `-DrampDuration=X` - This sets the amount of seconds the test will ramp the test load from 0 users to X users in the test.
+- `-DatOnceUsers=X` - Injects a given number of users at once.
+- `-DconstantUsersPerSec=X -DconstUsersDuration=X` - Injects users at a constant rate, defined in users per second, during a given duration. Users will be injected at regular intervals.
+##### Environment settings
 
-Example:
+There are 4 environment contexts that you can run the performance tests in, you must set the
+system property `-Denv` to point to one of them e.g. `mvn clean gatling:test -Denv=test`
 
-`mvn clean gatling:test -Dusers=100 -Drampup=5`
+- **local, dev, test, perf**
+
+These environments will programmatically point to their respective properties files.
+e.g. 
+
+- **local - local.application.properties**
+
+- **dev - dev.application.properties**
+
+To a local environment of your choice, then set the `env` arg to `local` and amend the url accordingly in the `local.application.properties` file.  
+
+##### Examples
+
+- Run all simulations
+
+`mvn clean gatling:test -Denv=dev -DrampUsers=10 -DrampDuration=5 -DatOnceUsers=4`
+
+- Run a single simulation
+
+`mvn clean gatling:test -Denv=dev -Dgatling.simulationClass=com.amido.simulations.menu.GetMenuSimulation -DrampUsers=2 -DrampDuration=2`
+
+##### Deleting menu resources
+
+In the root folder of the project run the following commands to delete menu resources by passing the base uri as an argument.
+
+1. `cd src/test/scala/com/amido/utils`
+2. `sh tearDownDeleteMenuItems.sh http://localhost:9000`
+
+**NB**: In the tests, created Menu resources have a `description` and `name` prefixed with the string "PERF TEST".
+This is so that they can be easily identified in queries.
+
 
 ## Folder Structure
 

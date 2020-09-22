@@ -1,5 +1,0 @@
-ASSERTION	AAEDAAEBAwAAAAAAAIjTQA==
-RUN	com.amido.simulations.GetMenuSimulation	getmenusimulation	1597325240630	 	3.2.0
-USER	Get menu scenario	1	START	1597325243283	1597325243283
-REQUEST	1		Get Menu	1597325243317	1597325282352	KO	status.find.is(200), but actually found 500
-USER	Get menu scenario	1	END	1597325243283	1597325282402

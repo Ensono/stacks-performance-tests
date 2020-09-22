@@ -6,9 +6,12 @@ import com.typesafe.config._
 object Configuration {
   val environment: String =  System.getProperty("env")
   private val config: Config = ConfigFactory.load(s"$environment.application.properties")
-  // When intending to run in the pipeline modify below variable to following: config.getString("baseUrl")
-  lazy val baseUrl: String = "http://localhost:9000"
 
-  val users: Int = Integer.getInteger("users", 1).toInt
-  val rampup: Int = Integer.getInteger("rampup", 1).toInt
+  lazy val baseUrl: String = config.getString("baseUrl")
+
+  val rampUpUsers: Int = Integer.getInteger("rampUsers", 1).toInt
+  val rampUpUsersDuration: Int = Integer.getInteger("rampDuration", 1).toInt
+  val onceUsers: Int = Integer.getInteger("atOnceUsers", 0).toInt
+  val constUsersPerSec: Int = Integer.getInteger("constantUsersPerSec", 0).toInt
+  val constUsersPerSecDuration: Int = Integer.getInteger("constUsersDuration",0).toInt
 }
