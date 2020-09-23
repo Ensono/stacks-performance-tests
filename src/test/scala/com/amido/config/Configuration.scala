@@ -7,7 +7,7 @@ object Configuration {
   val environment: String =  System.getProperty("env")
   private val config: Config = ConfigFactory.load(s"$environment.application.properties")
 
-  lazy val baseUrl: String = config.getString("baseUrl")
+  lazy val baseUrl: String = "https://dev-java-api.nonprod.amidostacks.com/api"
 
   val rampUpUsers: Int = Integer.getInteger("rampUsers", 1).toInt
   val rampUpUsersDuration: Int = Integer.getInteger("rampDuration", 1).toInt
