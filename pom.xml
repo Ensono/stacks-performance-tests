@@ -62,10 +62,10 @@
           <configuration>
             <runMultipleSimulations>true</runMultipleSimulations>
             <includes>
-              <param>com.amido.simulations.*</param>
-            </includes>
-            <excludes>
-<!--              <param>com.amido.simulations.menu.CreateMenuSimulation</param>-->
+               <param>com.amido.simulations.*</param>
+             </includes>
+             <excludes>
+ <!--              <param>com.amido.simulations.menu.CreateMenuSimulation</param>-->
             </excludes>
           </configuration>
       </plugin>
