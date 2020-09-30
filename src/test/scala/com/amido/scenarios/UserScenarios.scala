@@ -15,6 +15,8 @@ object UserScenarios {
 
   //Simulates a user fetching one specific menu
   val getSpecificMenuScenario = scenario("GET specific menu scenario")
+    .feed(createMenuFeed)
+    .exec(MenuRequests.createMenu)
     .exec(MenuRequests.getMenuResource)
 
   //Simulates creating menu with a category and an item
@@ -27,7 +29,7 @@ object UserScenarios {
     .exec(ItemRequests.createItem)
 
   //Simulates an item to be updated in a menu
-  val updateItemScenario: ScenarioBuilder = scenario("CREATE then UPDATE item scenario")
+  val updateSpecificItemScenario: ScenarioBuilder = scenario("CREATE then UPDATE item scenario")
     .feed(createMenuFeed)
     .exec(MenuRequests.createMenu)
     .feed(createCategoryFeed)

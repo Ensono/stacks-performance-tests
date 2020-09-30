@@ -14,7 +14,7 @@ object ItemRequests {
 
   private val MenuPath = "/v1/menu/"
   private val CategoryPath = "/category/"
-  private val ItemPath = "/item/"
+  private val ItemPath = "/items/"
 
   val createItemFeed =
     Iterator.continually(Map("name" -> ("PERF TEST name " +  UUID.random),
@@ -29,7 +29,7 @@ object ItemRequests {
 
   val createItem: HttpRequestBuilder = http("Create Item")
     .post(baseUrl + MenuPath + "${menuId}" + CategoryPath + "${categoryId}" + ItemPath)
-    .body(ElFileBody("bodies/create-category.json"))
+    .body(ElFileBody("bodies/create-item.json"))
     .headers(headers)
     .check(status is 201)
     .check(jsonPath("$.id").saveAs("itemId"))
@@ -41,6 +41,6 @@ object ItemRequests {
   val updateItem : HttpRequestBuilder = http("Update Item")
     .put(baseUrl + MenuPath + "${menuId}" + CategoryPath + "${categoryId}" + ItemPath + "${itemId}")
     .headers(headers)
-    .body(ElFileBody("bodies/update-category.json"))
+    .body(ElFileBody("bodies/update-item.json"))
     .check(status is 200)
 }
